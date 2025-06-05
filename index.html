@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Análise Sociodemográfica</title>
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+      padding: 40px 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+      color: #2c3e50;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .group {
+      flex: 1 1 40%;
+    }
+
+    .group strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: #34495e;
+    }
+
+    .group label {
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .group input[type="radio"] {
+      margin-right: 8px;
+      accent-color: #2c3e50;
+    }
+
+    .group label:hover {
+      color: #2c3e50;
+      transform: translateX(5px);
+    }
+
+    #chart-container {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    #chart-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 2px solid #2c3e50;
+      background: #ecf0f1;
+      padding: 10px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    #chart-image:hover {
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 768px) {
+      .options {
+        flex-direction: column;
+      }
+
+      .group {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Análise Sociodemográfica</h1>
+
+    <div class="options">
+      <div class="group">
+        <strong>Tipo de Gráfico:</strong>
+        <label><input type="radio" name="chartType" value="barras" checked /> Gráfico de Barras</label>
+        <label><input type="radio" name="chartType" value="pizza" /> Gráfico de Pizza</label>
+      </div>
+
+      <div class="group">
+        <strong>Distribuição por:</strong>
+        <label><input type="radio" name="distribution" value="idade" checked /> Idade</label>
+        <label><input type="radio" name="distribution" value="sexo" /> Sexo</label>
+        <label><input type="radio" name="distribution" value="estado_civil" /> Estado Civil</label>
+      </div>
+    </div>
+
+    <div id="chart-container">
+      <img id="chart-image" src="dados_img/Idadebarras.png" alt="Gráfico sociodemográfico" />
+    </div>
+  </div>
+
+  <script>
+    const chartImage = document.getElementById("chart-image");
+
+    function updateChart() {
+      const chartType = document.querySelector('input[name="chartType"]:checked').value;
+      const distribution = document.querySelector('input[name="distribution"]:checked').value;
+
+      let filename = "";
+
+      if (distribution === "idade") {
+        filename = "Idade" + chartType + ".png";
+      } else if (distribution === "sexo") {
+        filename = "Sexo" + chartType + ".png";
+      } else if (distribution === "estado_civil") {
+        filename = "EstadoCivil" + chartType + ".png";
+      }
+
+      chartImage.src = "dados_img/" + filename;
+    }
+
+    const chartTypeRadios = document.getElementsByName("chartType");
+    const distributionRadios = document.getElementsByName("distribution");
+
+    chartTypeRadios.forEach(radio => radio.addEventListener("change", updateChart));
+    distributionRadios.forEach(radio => radio.addEventListener("change", updateChart));
+  </script>
+
+</body>
+</html>
